@@ -1,0 +1,22 @@
+{
+  "name": "anr",
+  "version": "1.0.0",
+  "description": "Any Request Logger",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msenyk/anr.git"
+  },
+  "author": "Mykola Senyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msenyk/anr/issues"
+  },
+  "homepage": "https://github.com/msenyk/anr#readme",
+  "dependencies": {
+    "redis": "^2.6.1"
+  }
+}
