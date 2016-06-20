@@ -2,8 +2,9 @@
   "name": "anr",
   "version": "1.0.0",
   "description": "Any Request Logger",
-  "main": "app.js",
+  "main": "client/js/app.js",
   "scripts": {
+    "start": "webpack-dev-server --inline --content-base .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,18 @@
   },
   "homepage": "https://github.com/msenyk/anr#readme",
   "dependencies": {
+    "react": "^15.1.0",
+    "react-bootstrap": "^0.29.5",
+    "react-dom": "^15.1.0",
     "redis": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "http-server": "^0.9.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
