@@ -23,7 +23,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<div className="container">
+				<div className="container-fluid">
 					<h1>Recent requests</h1>
 					<p>{this.props.clientId}</p>
 					<RequestTable rows={requestLogRecords} />
