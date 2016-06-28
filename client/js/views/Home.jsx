@@ -15,7 +15,7 @@ const requestLogRecords = [
 		ip: '127.0.0.2',
 		method: 'GET',
 		url: 'query?id=1&a=b',
-		headers: {'content-type': 'text/html'}
+		headers: {'content-type': 'text/html', 'length': '12345'}
 	}
 ];
 
