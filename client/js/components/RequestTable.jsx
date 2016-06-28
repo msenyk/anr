@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Table, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Table, Grid, Row, Col, Label } from 'react-bootstrap';
 
 export default React.createClass({
 	buildRows() {
@@ -23,20 +23,22 @@ const RequestRow = React.createClass({
 		return {
 			isShowHeaders: false,
 			isShowBody: false,
-			isShowDetails: false
+			isShowDetails: false,
+			visibility: {
+				details: false,
+				headers: false,
+				body: false
+			}
 		}
 	},
 	createdDate() {
 		return new Date(this.props.row.created).toString();
 	},
-	showHideHeaders() {
+	toggleVisibility(partName) {
+		let visibility = this.state.visibility;
+		visibility[partName] = !this.state.visibility[partName];
 		this.setState({
-			isShowHeaders: !this.state.isShowHeaders
-		});
-	},
-	showHideDetails() {
-		this.setState({
-			isShowDetails: !this.state.isShowDetails
+			visibility
 		});
 	},
 	render() {
@@ -47,12 +49,14 @@ const RequestRow = React.createClass({
 						{ this.createdDate() }<br/>
 					</Col>
 	  				<Col lg={10} md={9}>
-	  					<Button onClick={ this.showHideDetails }>{ this.state.isShowDetails ? 'Hide Details' : 'Show Details' }</Button>
-	  					<Button onClick={ this.showHideHeaders }>{ this.state.isShowHeaders ? 'Hide Headers' : 'Show Headers' }</Button>
+	  					<p>
+		  					<Button onClick={ () => this.toggleVisibility('details') }>{ this.state.visibility.details ? 'Hide Details' : 'Show Details' }</Button>
+		  					<Button onClick={ () => this.toggleVisibility('headers') }>{ this.state.visibility.headers ? 'Hide Headers' : 'Show Headers' }</Button>
+	  					</p>
+						{ this.state.visibility.details ? <RequestDetails row={this.props.row}/> : '' }
+						{ this.state.visibility.headers ? <RequestHeaders headers={this.props.row.headers}/> : '' }
 	  				</Col>
 				</Row>
-				{ this.state.isShowDetails ? <RequestDetails row={this.props.row}/> : '' }
-				{ this.state.isShowHeaders ? <RequestHeaders headers={this.props.row.headers}/> : '' }
 			</div>
 		)
 	}
@@ -61,14 +65,16 @@ const RequestRow = React.createClass({
 const RequestDetails = React.createClass({
 	render() {
 		return (
-			<Row>
-				<Col lg={10} lgOffset={2}>
-					<p>Details</p>
+			<div>
+				<p>
+					<Label bsStyle="default">Details</Label>
+				</p>
+				<p>
 					IP: { this.props.row.ip } <br/>
 					Method: { this.props.row.method } <br/>
 					URL: { this.props.row.url}
-				</Col>
-			</Row>
+				</p>
+			</div>
 		)
 	}
 })
@@ -80,12 +86,14 @@ const RequestHeaders = React.createClass({
 	},
 	render() {
 		return (
-			<Row>
-				<Col lg={12}>
-					<p>Headers</p>
-					{ this.buildHeaders() }
-				</Col>
-			</Row>
+			<div>
+				<p>
+					<Label bsStyle="default">Headers</Label>
+				</p>
+				<ul>
+				{ this.buildHeaders() }
+				</ul>
+			</div>
 		)
 	}
 })
@@ -93,7 +101,7 @@ const RequestHeaders = React.createClass({
 const HeaderItem = React.createClass({
 	render() {
 		return (
-			<p>{this.props.name}: {this.props.value}</p>
+			<li>{this.props.name}: {this.props.value}</li>
 		)
 	}
 })
