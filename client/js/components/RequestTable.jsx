@@ -42,6 +42,7 @@ const RequestRow = React.createClass({
 		});
 	},
 	render() {
+		let toggleHandler = (name) => this.toggleVisibility(name);
 		return (
 			<div>
 				<Row>
@@ -50,14 +51,24 @@ const RequestRow = React.createClass({
 					</Col>
 	  				<Col lg={10} md={9}>
 	  					<p>
-		  					<Button onClick={ () => this.toggleVisibility('details') }>{ this.state.visibility.details ? 'Hide Details' : 'Show Details' }</Button>
-		  					<Button onClick={ () => this.toggleVisibility('headers') }>{ this.state.visibility.headers ? 'Hide Headers' : 'Show Headers' }</Button>
+		  					<ToggleButton name="details" label="Details" visible={this.state.visibility.details} handler={ toggleHandler } />
+		  					<ToggleButton name="headers" label="Headers" visible={this.state.visibility.headers} handler={ toggleHandler } />
+		  					<ToggleButton name="body" label="Body" visible={this.state.visibility.body} handler={ toggleHandler } />
 	  					</p>
 						{ this.state.visibility.details ? <RequestDetails row={this.props.row}/> : '' }
 						{ this.state.visibility.headers ? <RequestHeaders headers={this.props.row.headers}/> : '' }
+						{ this.state.visibility.body ? <RequestBody body={this.props.row.body}/> : '' }
 	  				</Col>
 				</Row>
 			</div>
+		)
+	}
+})
+
+const ToggleButton = React.createClass({
+	render() {
+		return (
+			<Button onClick={ () => this.props.handler(this.props.name) }>{ this.props.visible ? 'Hide ' + this.props.label : 'Show '  + this.props.label }</Button>
 		)
 	}
 })
@@ -102,6 +113,19 @@ const HeaderItem = React.createClass({
 	render() {
 		return (
 			<li>{this.props.name}: {this.props.value}</li>
+		)
+	}
+})
+
+const RequestBody = React.createClass({
+	render() {
+		return (
+			<div>
+				<p>
+					<Label bsStyle="default">Body</Label>
+				</p>
+				<p>{ this.props.body }</p>
+			</div>
 		)
 	}
 })
